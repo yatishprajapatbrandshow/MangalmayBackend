@@ -1,5 +1,5 @@
 const { Slug, ExtraParamsData, PageData, Review, Faq, Testimonial } = require("../models");
-const postmetaModel = require("../models/postmeta.model");
+const postmetaModel = require("../models/postMeta.model");
 const imagePath = "https://csip-image.blr1.digitaloceanspaces.com/csip-image"
 const generateUniqueId = async (existingIds) => {
   let id;
