@@ -37,7 +37,7 @@ const uploadfile = async (req, res) => {
       const fileName = file.originalname;
 
       // Prepare S3 upload parameters
-      const key = `akg/${fileName}`;
+      const key = `mmit/${fileName}`;
       const fileBuffer = fs.readFileSync(filePath); // Read file as a buffer
 
       const uploadParams = {
