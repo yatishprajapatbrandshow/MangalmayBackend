@@ -1,9 +1,5 @@
 const { Slug, ExtraParamsData, PageData, Review, Faq, Testimonial } = require("../models");
 const postmetaModel = require("../models/postMeta.model");
-const TermRelationship = require('../models/TermTaxinomyRelationship.model');
-const TermTaxonomy = require('../models/TermTaxinomy.model');
-const Term = require('../models/Term.model');
-const TermMeta = require('../models/TermMeta.model'); // optional, if you want meta
 const imagePath = "https://csip-image.blr1.digitaloceanspaces.com/csip-image"
 const generateUniqueId = async (existingIds) => {
   let id;
@@ -536,47 +532,9 @@ const buildBreadcrumb = async (slugDoc) => {
   return breadcrumb;
 };
 
-async function getCategoriesAndTagsByPostId(postId) {
-  try {
-    // 1️⃣ Get all term_taxonomy_ids linked to this post
-    const relationships = await TermRelationship.find({ object_id: postId }).lean();
-    const termTaxonomyIds = relationships.map(r => r.term_taxonomy_id);
-
-    if (termTaxonomyIds.length === 0) return { categories: [], tags: [] };
-
-    // 2️⃣ Get term taxonomy details
-    const taxonomies = await TermTaxonomy.find({ term_taxonomy_id: { $in: termTaxonomyIds } }).lean();
-
-    // 3️⃣ Separate term IDs based on taxonomy type
-    const categoryTermIds = taxonomies
-      .filter(t => t.taxonomy === 'category')
-      .map(t => t.term_id);
-
-    const tagTermIds = taxonomies
-      .filter(t => t.taxonomy === 'post_tag')
-      .map(t => t.term_id);
-
-    // 4️⃣ Fetch term details
-    const categories = await Term.find({ term_id: { $in: categoryTermIds } }).lean();
-    const tags = await Term.find({ term_id: { $in: tagTermIds } }).lean();
-
-    // Optional: include meta data for each term
-    // const categoryIds = categories.map(c => c.term_id);
-    // const categoryMetas = await TermMeta.find({ term_id: { $in: categoryIds } }).lean();
-
-    return {
-      categories: categories.map(c => ({ term_id: c.term_id, name: c.name, slug: c.slug })),
-      tags: tags.map(t => ({ term_id: t.term_id, name: t.name, slug: t.slug })),
-    };
-  } catch (error) {
-    console.error("Error fetching categories/tags:", error);
-    return { categories: [], tags: [] };
-  }
-}
 const getBySlug = async (req, res) => {
   try {
     let { path } = req.query;
-    console.log(path);
     if (!path) {
       return res.status(400).json({
         status: false,
@@ -593,7 +551,16 @@ const getBySlug = async (req, res) => {
     if (!path.startsWith('/')) {
       path = '/' + path;
     }
-    const data = await Slug.findOne({ path, deleteflag: false, status: true }).lean();
+    if (!path.endsWith('/')) {
+      path = path + '/'
+    }
+    console.log(path);
+    
+    const selectedFields = "ComponentType addedon banner_img breadCrumb date createdAt description downloadCenterPdf extraComponentData faculties faq featured_img galleryimg highlightBanner mainReportImage metadesc metatitle name pageData page_id path slug shortdesc parent_id status stream studentReviews tag1 tag2 tag3 type video_url testimonials"
+
+    const data = await Slug.findOne({ path, deleteflag: false, status: true }).lean().select(selectedFields);
+    console.log(data);
+
     if (!data) {
       return res.status(404).json({
         status: false,
@@ -693,11 +660,9 @@ const getBySlug = async (req, res) => {
 
     // Fetch Meta Data 
     const metas = await postmetaModel.find({ post_id: data?.page_id })
-    const { categories, tags } = await getCategoriesAndTagsByPostId(data?.page_id)
+
     const finalData = {
       ...data,
-      categories,
-      tags,
       extraComponentData: formattedExtraParams || false,
       breadCrumb: breadcrumb || false,
       banner_img: data?.banner_img ? imagePath + data?.banner_img : false,

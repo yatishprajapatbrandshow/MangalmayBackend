@@ -374,6 +374,14 @@ const slugSchema = new mongoose.Schema({
     },
     post_status: {
         type: String
+    },
+    categorys: {
+        type: Array,
+        default: []
+    },
+    tags: {
+        type: Array,
+        default: []
     }
 }, { timestamps: true });
 

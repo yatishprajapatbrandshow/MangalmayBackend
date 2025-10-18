@@ -22,7 +22,8 @@ const {
   topperRouter,
   noticeRouter,
   permissionRouter,
-  adminLogRouter
+  adminLogRouter,
+  blogRouter
 
 } = require("./routes");
 const { userAuth } = require("./middlewares/auth");
@@ -42,8 +43,9 @@ connectDB();
 
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://mangalmay-project.vercel.app",
-  "https://vs4l9npm-3000.inc1.devtunnels.ms"
+  "https://new-akg.vercel.app",
+  "https://vs4l9npm-3000.inc1.devtunnels.ms",
+  "https://mimt-frontend.vercel.app"
 ];
 
 // Custom function to allow subdomains of onrender.com
@@ -143,6 +145,7 @@ app.use("/api/downloads", downloadRouter)
 app.use("/api/toppers", topperRouter)
 
 app.use("/api/notices", noticeRouter)
+app.use("/api/blog", blogRouter)
 
 // Start the server
 app.listen(PORT || 3000, () => {

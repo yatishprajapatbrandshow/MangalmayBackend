@@ -77,7 +77,7 @@ async function migrateData() {
                     post_author: Number(item.post_author) || 0,
                     post_date: parseWPDate(item.post_date) || new Date(),
                     post_date_gmt: parseWPDate(item.post_date_gmt),
-                    description: item.post_content || '',
+                    post_content: item.post_content || '',
                     post_title: item.post_title || '',
                     post_excerpt: item.post_excerpt || '',
                     post_status: item.post_status || 'draft',

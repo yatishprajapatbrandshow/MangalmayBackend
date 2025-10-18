@@ -22,6 +22,7 @@ const topperRouter = require("./topper.router");
 const noticeRouter = require("./notice.router");
 const permissionRouter = require('./permission.router')
 const adminLogRouter = require('./adminLog.router');
+const blogRouter = require('./blog.router');
 module.exports = {
   adminRouter,
   slugRouter,
@@ -46,5 +47,6 @@ module.exports = {
   topperRouter,
   noticeRouter,
   permissionRouter,
-  adminLogRouter
+  adminLogRouter,
+  blogRouter
 };
