@@ -61,18 +61,19 @@ function isAllowedOrigin(origin) {
   }
 }
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || isAllowedOrigin(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+app.use(cors());
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin || isAllowedOrigin(origin)) {
+//         callback(null, true);
+//       } else {
+//         callback(new Error("Not allowed by CORS"));
+//       }
+//     },
+//     credentials: true,
+//   })
+// );
 
 app.use(express.json()); // To parse JSON request bodies
 app.use(cookieParser());
