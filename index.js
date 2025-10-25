@@ -45,7 +45,8 @@ const allowedOrigins = [
   "http://localhost:3000",
   "https://new-akg.vercel.app",
   "https://vs4l9npm-3000.inc1.devtunnels.ms",
-  "https://mimt-frontend.vercel.app"
+  "https://mimt-frontend.vercel.app",
+  "https://mimt-front.vercel.app"
 ];
 
 // Custom function to allow subdomains of onrender.com
