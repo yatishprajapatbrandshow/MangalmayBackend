@@ -74,7 +74,6 @@ exports.getAll = async (req, res) => {
   }
 };
 
-
 exports.getUniqueCategories = async (req, res) => {
   try {
     // Fetch only the categorys field from BlogDetails type
