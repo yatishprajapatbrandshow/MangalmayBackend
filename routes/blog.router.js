@@ -4,5 +4,6 @@ const blogController = require('../controller/blog-list.controller');
 
 // GET /api/slugs/filter
 router.get('/', blogController.getAll);
+router.get('/get-blog-category', blogController.getUniqueCategories);
 
 module.exports = router;
