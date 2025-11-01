@@ -558,10 +558,10 @@ const getBySlug = async (req, res) => {
       path = path.slice(0, -1);
     }
     
-    const selectedFields = "ComponentType addedon banner_img breadCrumb date createdAt description downloadCenterPdf extraComponentData faculties faq featured_img galleryimg highlightBanner mainReportImage metadesc metatitle name pageData page_id path slug shortdesc parent_id status stream studentReviews tag1 tag2 tag3 type video_url testimonials"
+    // const selectedFields = "ComponentType addedon banner_img breadCrumb date createdAt description downloadCenterPdf extraComponentData faculties faq featured_img galleryimg highlightBanner mainReportImage metadesc metatitle name pageData page_id path slug shortdesc parent_id status stream studentReviews tag1 tag2 tag3 type video_url testimonials"
 
     // First try without trailing slash
-    let data = await Slug.findOne({ path, deleteflag: false, status: true }).lean().select(selectedFields);
+    let data = await Slug.findOne({ path, deleteflag: false, status: true }).lean();
     
     // If no data found, try with trailing slash
     if (!data) {
