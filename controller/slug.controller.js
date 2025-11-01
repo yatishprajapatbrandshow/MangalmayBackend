@@ -566,7 +566,7 @@ const getBySlug = async (req, res) => {
     // If no data found, try with trailing slash
     if (!data) {
       const pathWithSlash = path + '/';
-      data = await Slug.findOne({ path: pathWithSlash, deleteflag: false, status: true }).lean().select(selectedFields);
+      data = await Slug.findOne({ path: pathWithSlash, deleteflag: false, status: true }).lean();
     }
     
     console.log('Final path:', path);
