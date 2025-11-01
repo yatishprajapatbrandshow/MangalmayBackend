@@ -676,7 +676,7 @@ const getBySlug = async (req, res) => {
       ...data,
       extraComponentData: formattedExtraParams || false,
       breadCrumb: breadcrumb || false,
-      banner_img: data?.banner_img ? imagePath + data?.banner_img : false,
+      banner_img: data?.banner_img ? data?.type="BlogDetail" ? imagePath + data?.banner_img :data?.banner_img : false,
       pageData,
       faculties: faculties.length > 0 ? faculties : false,
       studentReviews: studentReviews.length > 0 ? studentReviews : false,
