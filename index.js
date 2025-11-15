@@ -48,7 +48,8 @@ const allowedOrigins = [
   "https://mimt-frontend.vercel.app",
   "https://mimt-front.vercel.app",
   "https://new-mimt-front.vercel.app",
-  "https://new-mimt-front2.vercel.app"
+  "https://new-mimt-front2.vercel.app",
+  "https://new-mimt-front3.vercel.app"
 ];
 
 // Custom function to allow subdomains of onrender.com
